@@ -1,0 +1,526 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Asap:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#FBF7F3;--text:#4D4D4D;--c1:#3ECDC5;--c2:#004A4F;
+  --c1-light:#E8FAF9;--c2-light:#E6F0EF;--c1-mid:#2BADA6;
+  --border:#D6CFC8;--white:#fff;
+}
+body{font-family:'Asap',sans-serif;font-size:15px;color:var(--text);background:var(--bg);padding:0 0 2rem}
+.hero{background:var(--c2);padding:2rem 1.5rem 1.75rem;position:relative;overflow:hidden}
+.hero::after{content:'';position:absolute;right:-40px;top:-40px;width:200px;height:200px;border-radius:50%;border:40px solid rgba(62,205,197,0.15)}
+.hero-eyebrow{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--c1);margin-bottom:.5rem;font-weight:500}
+.hero-title{font-size:22px;font-weight:600;color:#fff;margin-bottom:.5rem;line-height:1.3}
+.hero-sub{font-size:13px;color:rgba(255,255,255,0.7);line-height:1.6;max-width:560px}
+.size-nav{display:flex;gap:6px;padding:1.25rem 1.5rem .75rem;flex-wrap:wrap;background:var(--bg);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:10}
+.tab-btn{padding:7px 14px;border-radius:20px;border:1px solid var(--border);background:var(--white);color:var(--text);font-size:12px;font-family:'Asap',sans-serif;cursor:pointer;transition:all .15s;white-space:nowrap;font-weight:500}
+.tab-btn:hover{border-color:var(--c1);color:var(--c2)}
+.tab-btn.active{background:var(--c2);color:#fff;border-color:var(--c2)}
+.content{padding:1.25rem 1.5rem}
+.panel{display:none}.panel.active{display:block}
+.section{margin-bottom:1.75rem}
+.sec-head{display:flex;align-items:center;gap:10px;margin-bottom:.9rem}
+.sec-dot{width:10px;height:10px;border-radius:50%;background:var(--c1);flex-shrink:0}
+.sec-title{font-size:15px;font-weight:600;color:var(--c2)}
+.actu-badge{display:inline-flex;align-items:center;gap:6px;background:var(--c1);color:var(--white);font-size:11px;font-weight:600;padding:4px 12px;border-radius:20px;margin-bottom:.75rem;text-decoration:none}
+.actu-badge:hover{background:var(--c1-mid)}
+.hl{border-left:3px solid var(--c1);background:var(--c1-light);border-radius:0 8px 8px 0;padding:12px 14px;margin-bottom:10px}
+.hl.dark{border-left-color:var(--c2);background:var(--c2-light)}
+.hl.soft{border-left-color:var(--c1-mid);background:#f0faf9}
+.hl p{font-size:13px;color:var(--text);line-height:1.65}
+.hl strong{color:var(--c2);font-weight:600}
+.hl a{color:var(--c1-mid);text-decoration:none;font-weight:500}
+.hl a:hover{text-decoration:underline}
+.steps{display:flex;flex-direction:column;gap:8px}
+.step{display:flex;gap:12px;background:var(--white);border:1px solid var(--border);border-radius:10px;padding:13px 15px}
+.step-n{width:26px;height:26px;border-radius:50%;background:var(--c2);color:#fff;font-size:12px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.step-title{font-size:13px;font-weight:600;color:var(--c2);margin-bottom:4px}
+.step-text{font-size:12.5px;color:var(--text);line-height:1.6}
+.step-text a{color:var(--c1-mid);text-decoration:none;font-weight:500}
+.step-text a:hover{text-decoration:underline}
+.step-text p{margin-bottom:8px}
+.step-text p:last-child{margin-bottom:0}
+.step-label{font-weight:600;color:var(--c2)}
+.law-box{background:var(--c2);border-radius:10px;padding:14px 16px;margin-bottom:8px}
+.law-box .law-title{font-size:13px;font-weight:600;color:#fff;margin-bottom:6px}
+.law-box .law-text{font-size:12.5px;color:rgba(255,255,255,.8);line-height:1.6}
+.law-box strong{color:var(--c1)}
+.fin-cards{display:flex;flex-direction:column;gap:8px}
+.fin-card{background:var(--white);border:1px solid var(--border);border-radius:10px;padding:13px 15px}
+.fin-card-title{font-size:13px;font-weight:600;color:var(--c2);margin-bottom:5px}
+.fin-card-text{font-size:12.5px;color:var(--text);line-height:1.6}
+.fin-card-text a{color:var(--c1-mid);text-decoration:none;font-weight:500}
+.fin-card-text a:hover{text-decoration:underline}
+.fin-tag{display:inline-block;font-size:10px;font-weight:600;padding:2px 8px;border-radius:20px;background:var(--c1-light);color:var(--c2);margin-bottom:5px}
+.label-box{background:var(--white);border:1px solid var(--border);border-radius:10px;padding:14px 16px}
+.label-intro{font-size:12.5px;color:var(--text);line-height:1.6;margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid var(--border)}
+.label-reqs{display:grid;grid-template-columns:1fr 1fr;gap:4px 12px;margin-bottom:12px}
+@media(max-width:420px){.label-reqs{grid-template-columns:1fr}}
+.req{display:flex;gap:7px;font-size:12px;color:var(--text);line-height:1.5;align-items:flex-start}
+.req-dot{width:6px;height:6px;border-radius:50%;background:var(--c1);flex-shrink:0;margin-top:5px}
+.label-links{display:flex;flex-wrap:wrap;gap:6px;padding-top:10px;border-top:1px solid var(--border)}
+.label-links a{font-size:12px;color:var(--c1-mid);text-decoration:none;font-weight:500;border:1px solid var(--border);border-radius:20px;padding:3px 10px;background:var(--bg)}
+.label-links a:hover{border-color:var(--c1)}
+.links-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:7px;margin-top:8px}
+.lnk{background:var(--white);border:1px solid var(--border);border-radius:10px;padding:11px 13px;text-decoration:none;display:block;transition:border-color .15s}
+.lnk:hover{border-color:var(--c1)}
+.lnk-name{font-size:12.5px;font-weight:600;color:var(--c2);margin-bottom:3px}
+.lnk-desc{font-size:11.5px;color:var(--text);line-height:1.5}
+.lnk-desc a{color:var(--c1-mid);text-decoration:none;font-weight:500}
+.lnk-desc a:hover{text-decoration:underline}
+.tag-row{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}
+.tag{font-size:11px;padding:3px 10px;border-radius:20px;font-weight:500}
+.tag-red{background:#fde8e8;color:#8b2020}
+.tag-amber{background:#fff3cd;color:#6b4f00}
+.footer{border-top:1px solid var(--border);padding:1rem 1.5rem .5rem;margin-top:.5rem}
+.footer-text{font-size:11.5px;color:#9e9790;text-align:center}
+.footer-text a{color:var(--c1-mid);text-decoration:none}
+</style>
+</head>
+<body>
+
+<h2 style="position:absolute;left:-9999px">Outil de lancement d'une dynamique vélo en entreprise — 2R Aventure</h2>
+
+<div class="hero">
+  <div class="hero-eyebrow">2R Aventure · Mobilité employeur</div>
+  <div class="hero-title">Lancer la dynamique vélo<br>dans son entreprise</div>
+  <div class="hero-sub">Guide progressif par taille de structure : premiers gestes concrets, incitatifs financiers, obligations réglementaires, label Employeur Pro Vélo et ressources du territoire.</div>
+</div>
+
+<div class="size-nav">
+  <button class="tab-btn active" onclick="show('tpe',this)">TPE · 1–10</button>
+  <button class="tab-btn" onclick="show('pme',this)">PME · 11–49</button>
+  <button class="tab-btn" onclick="show('pme250',this)">PME · 50–249</button>
+  <button class="tab-btn" onclick="show('eti',this)">ETI · 250–4999</button>
+</div>
+
+<div class="content">
+
+<!-- ===== TPE ===== -->
+<div id="p-tpe" class="panel active">
+
+  <div class="section">
+    <div class="sec-head"><div class="sec-dot"></div><div class="sec-title">Rendre le vélo visible — première action</div></div>
+    <div class="hl">
+      <p><strong>Le signal le plus fort : arriver à vélo.</strong> En TPE, le dirigeant donne le ton. Quand il arrive avec son casque, les collaborateurs comprennent que c'est possible — et osent se lancer. Pas besoin de publier ses statistiques : en parler lors des entretiens d'embauche, l'intégrer aux valeurs de la structure, c'est déjà un acte d'engagement.</p>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-n">1</div>
+        <div>
+          <div class="step-title">Créer un espace de stationnement digne</div>
+          <div class="step-text">Un vélo posé dans un couloir est un frein. Un support adapté est une invitation. La gamme <a href="https://www.equipstore.fr/" target="_blank">Equipstore</a> — disponible chez Leroy Merlin ou sur equipstore.fr — couvre les besoins jusqu'à une dizaine de vélos. Pensez aussi au rangement des accessoires : casque, antivol, veste de pluie ont besoin d'une place dédiée.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">2</div>
+        <div>
+          <div class="step-title">Rejoindre Tous à Biclou et les défis collectifs</div>
+          <div class="step-text"><a href="https://tousabiclou.fr" target="_blank">Tous à Biclou</a> est un collectif de dirigeants de la métropole lilloise qui organise des événements entre pairs et un grand rendez-vous annuel le <strong>21 mai 2026</strong> pour inciter les collaborateurs à venir à vélo. Participez aussi au <a href="https://challenge-maiavelo.geovelo.fr" target="_blank">défi Mai à Vélo</a> ou au <a href="https://challenge-mobilite-hdf.fr" target="_blank">Challenge Hauts-de-France Mobilité</a>.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">3</div>
+        <div>
+          <div class="step-title">Programme Marguerite — tester un vélo cargo</div>
+          <div class="step-text">Pour les structures jusqu'à 20 salariés, <a href="https://www.programme-marguerite.fr/solutions/lille/2-r-aventure" target="_blank">le programme Marguerite</a> (porté par 2R Aventure à Lille) permet de tester gratuitement un vélo cargo pour vos déplacements professionnels, avec une aide à l'achat jusqu'à <strong>1 200 € HT</strong>.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="sec-head"><div class="sec-dot"></div><div class="sec-title">Incitatifs financiers</div></div>
+    <div class="fin-cards">
+      <div class="fin-card">
+        <div class="fin-tag">Prime employeur</div>
+        <div class="fin-card-title">Forfait mobilité durable</div>
+        <div class="fin-card-text">Prime versée sur la base du volontariat de l'employeur, non soumise à cotisations sociales, jusqu'à <strong>600 €/an par salarié</strong> pour les trajets domicile-travail à vélo. La mesure au meilleur rapport signal/coût pour une TPE. <a href="https://entreprendre.service-public.gouv.fr/vosdroits/F33808" target="_blank">→ service-public.fr</a></div>
+      </div>
+      <div class="fin-card">
+        <div class="fin-tag">Remboursement kilométrique</div>
+        <div class="fin-card-title">Indemnité kilométrique vélo</div>
+        <div class="fin-card-text">25 cts/km pour les déplacements professionnels effectués à vélo, défiscalisés. Un geste simple qui reconnaît la contribution du cycliste.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="sec-head"><div class="sec-dot"></div><div class="sec-title">Le label Employeur Pro Vélo</div></div>
+    <div class="label-box">
+      <div class="label-intro">Le label Employeur Pro Vélo n'est pas seulement la récompense des entreprises déjà engagées — c'est avant tout <strong>un cadre pour structurer une démarche pro-vélo</strong>, quel que soit le point de départ. Il donne un cap, des critères concrets, une progression par niveaux, et l'accès à <strong>une communauté d'employeurs et à des ressources dédiées</strong> pour ne pas avancer seul.</div>
+      <div class="label-reqs">
+        <div class="req"><div class="req-dot"></div>Nomination d'un référent vélo</div>
+        <div class="req"><div class="req-dot"></div>Diagnostic de la mobilité vélo</div>
+        <div class="req"><div class="req-dot"></div>Plan d'action mobilité vélo</div>
+        <div class="req"><div class="req-dot"></div>Communication auprès du personnel</div>
+        <div class="req"><div class="req-dot"></div>Entretien et réparation des vélos</div>
+        <div class="req"><div class="req-dot"></div>Formation à la conduite sécurisée</div>
+        <div class="req"><div class="req-dot"></div>Analyse des risques et accidents</div>
+        <div class="req"><div class="req-dot"></div>Espace de stationnement vélo</div>
+      </div>
+      <div class="label-links">
+        <a href="https://employeurprovelo.fr/" target="_blank">Site officiel du label</a>
+        <a href="https://employeurprovelo.fr/" target="_blank">Communauté &amp; ressources</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="sec-head"><div class="sec-dot"></div><div class="sec-title">Ressources et réseaux</div></div>
+    <div class="links-grid">
+      <a class="lnk" href="https://tousabiclou.fr" target="_blank"><div class="lnk-name">Tous à Biclou</div><div class="lnk-desc">Collectif de dirigeants MEL · Grand public 21 mai 2026</div></a>
+      <a class="lnk" href="https://challenge-maiavelo.geovelo.fr" target="_blank"><div class="lnk-name">Mai à Vélo</div><div class="lnk-desc">Défi national collectif — mai 2026</div></a>
+      <a class="lnk" href="https://challenge-mobilite-hdf.fr" target="_blank"><div class="lnk-name">Challenge HDF Mobilité</div><div class="lnk-desc">Valoriser les trajets alternatifs à l'échelle de l'équipe</div></a>
+      <a class="lnk" href="https://2raventure.com/plan-de-mobilite/" target="_blank"><div class="lnk-name">2R Aventure</div><div class="lnk-desc">Outils plan de mobilité · Accompagnement label · Programme Marguerite</div></a>
+    </div>
+  </div>
+
+</div>
+
+<!-- ===== PME 11-49 ===== -->
+<div id="p-pme" class="panel">
+
+  <div class="section">
+    <div class="sec-head"><div class="sec-dot"></div><div class="sec-title">Rendre le vélo visible et créer une culture mobilité</div></div>
+    <a class="actu-badge" href="https://tousabiclou.fr" target="_blank">Tous à Biclou — 21 mai 2026</a>
+    <div class="hl">
+      <p><strong>Quand le dirigeant arrive à vélo, les collaborateurs comprennent que c'est possible</strong> — et osent se lancer. Pas besoin de publier ses statistiques : parler de vélo en entretien d'embauche, l'intégrer aux valeurs de la structure, participer à un défi collectif suffit à changer la norme. Des initiatives comme des pique-niques à vélo au printemps ou un défi inter-services créent une dynamique collective durable.</p>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-n">1</div>
+        <div>
+          <div class="step-title">Stationnement et équipements de base</div>
+          <div class="step-text">Un espace dédié, abrité, avec support(s) vélo, rangement pour les accessoires, et idéalement une pompe et un kit de réparation. La gamme <a href="https://www.equipstore.fr/" target="_blank">Equipstore</a> (disponible chez Leroy Merlin ou sur equipstore.fr) couvre les besoins jusqu'à une dizaine de vélos.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">2</div>
+        <div>
+          <div class="step-title">Communiquer auprès de toutes les parties prenantes</div>
+          <div class="step-text">
+            <p><span class="step-label">Candidats :</span> expliquer comment venir à vélo dès l'invitation à l'entretien, et partager l'engagement de la structure en faveur de la mobilité douce.</p>
+            <p><span class="step-label">Prestataires :</span> politique d'achat responsable en intégrant dans les critères les entreprises labellisées Employeur Pro Vélo, les artisans référencés auprès des <a href="https://lesboitesavelo.org/annuaire/" target="_blank">Boîtes à Vélo</a> ou dans l'annuaire du <a href="https://airtable.com/appoCpH7xdNhiHUsg/shr6oTGXWHu8SJNSM/tblI6t1looiZ7MBSn" target="_blank">Cercle Vélo MEL</a>.</p>
+            <p><span class="step-label">En externe :</span> mention sur le site web avec un calculateur d'itinéraire vélo (ex. <a href="https://geovelo.fr" target="_blank">Geovelo</a>), stationnement visible, engagement de l'entreprise sur ses accompagnements mobilité.</p>
+          </div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">3</div>
+        <div>
+          <div class="step-title">Programme Marguerite — jusqu'à 20 salariés</div>
+          <div class="step-text"><a href="https://www.programme-marguerite.fr/solutions/lille/2-r-aventure" target="_blank">Le programme Marguerite</a> (porté par 2R Aventure à Lille) permet de tester gratuitement un vélo cargo pour les déplacements professionnels, avec une aide à l'achat jusqu'à <strong>1 200 € HT</strong>.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="sec-head"><div class="sec-dot"></div><div class="sec-title">Incitatifs financiers</div></div>
+    <div class="fin-cards">
+      <div class="fin-card">
+        <div class="fin-tag">Prime employeur</div>
+        <div class="fin-card-title">Forfait mobilité durable</div>
+        <div class="fin-card-text">Prime versée sur la base du volontariat de l'employeur, non soumise à cotisations sociales, jusqu'à <strong>600 €/an par salarié</strong>. Objectif : positionner les cyclistes au même niveau que les automobilistes bénéficiant d'un parking gratuit. <a href="https://entreprendre.service-public.gouv.fr/vosdroits/F33808" target="_blank">→ service-public.fr</a></div>
+      </div>
+      <div class="fin-card">
+        <div class="fin-tag">Avantage salarié</div>
+        <div class="fin-card-title">Conversion de salaire</div>
+        <div class="fin-card-text">Le salarié réduit son salaire brut pour financer son vélo via l'employeur. Coût nul pour l'employeur — économie de 40 à 50 % pour le salarié (avantage en nature = 0 €, récupération des charges sociales, de la TVA, crédit d'impôt sur les sociétés). Possible dès 1 vélo. → <a href="https://2raventure.com/solutions-velos/" target="_blank">2R Aventure</a> et <a href="https://azfalte.fr" target="_blank">Azfalte</a>.</div>
+      </div>
+      <div class="fin-card">
+        <div class="fin-tag">Flotte partagée</div>
+        <div class="fin-card-title">Vélo de service</div>
+        <div class="fin-card-text">Flotte de vélos disponibles pour les déplacements professionnels et le test par les salariés. Tester, c'est souvent adopter. → <a href="https://2raventure.com/solutions-velos/" target="_blank">2R Aventure</a>.</div>
+      </div>
+      <div class="fin-card">
+        <div class="fin-tag">Véhicule personnalisé</div>
+        <div class="fin-card-title">Vélo de fonction</div>
+        <div class="fin-card-text">Vélo mis à disposition personnellement du salarié, avantage en nature nul, récupération de la TVA, crédit d'impôt sur les sociétés de 25 %. Pour le salarié, une économie pouvant atteindre 500 €/mois sur ses coûts de mobilité. Possible dès 1 vélo. → <a href="https://2raventure.com/solutions-velos/" target="_blank">2R Aventure</a> et <a href="https://azfalte.fr" target="_blank">Azfalte</a>.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="sec-head"><div class="sec-dot"></div><div class="sec-title">Le label Employeur Pro Vélo</div></div>
+    <div class="label-box">
+      <div class="label-intro">Plus qu'une récompense pour les entreprises déjà engagées, le label Employeur Pro Vélo est <strong>un cadre pour structurer la démarche</strong> — diagnostic, plan d'action, communication, équipements — et progresser à son propre rythme. Il donne aussi accès à <strong>une communauté d'employeurs et à des ressources pratiques</strong>.</div>
+      <div class="label-reqs">
+        <div class="req"><div class="req-dot"></div>Nomination d'un référent vélo</div>
+        <div class="req"><div class="req-dot"></div>Diagnostic de la mobilité vélo</div>
+        <div class="req"><div class="req-dot"></div>Plan d'action mobilité vélo</div>
+        <div class="req"><div class="req-dot"></div>Communication auprès du personnel</div>
+        <div class="req"><div class="req-dot"></div>Entretien et réparation des vélos</div>
+        <div class="req"><div class="req-dot"></div>Formation à la conduite sécurisée</div>
+        <div class="req"><div class="req-dot"></div>Analyse des risques et accidents</div>
+        <div class="req"><div class="req-dot"></div>Espace de stationnement vélo</div>
+      </div>
+      <div class="label-links">
+        <a href="https://employeurprovelo.fr/" target="_blank">Site officiel du label</a>
+        <a href="https://employeurprovelo.fr/" target="_blank">Communauté &amp; ressources</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="sec-head"><div class="sec-dot"></div><div class="sec-title">Ressources et réseaux</div></div>
+    <div class="links-grid">
+      <a class="lnk" href="https://tousabiclou.fr" target="_blank"><div class="lnk-name">Tous à Biclou</div><div class="lnk-desc">Événements B2B entre dirigeants · Grand public 21 mai 2026</div></a>
+      <a class="lnk" href="https://www.declic-mobilites.org/rdv-mobilite" target="_blank"><div class="lnk-name">Déclic Mobilités</div><div class="lnk-desc">Rendez-vous mobilité entre pairs · <a href="https://www.declic-mobilites.org/declic-mobilites/formation-management-mobilite" target="_blank">Formation référent mobilité</a></div></a>
+      <a class="lnk" href="https://challenge-mobilite-hdf.fr" target="_blank"><div class="lnk-name">Challenge HDF Mobilité</div><div class="lnk-desc">Valoriser les trajets alternatifs à l'échelle de l'équipe</div></a>
+      <a class="lnk" href="https://2raventure.com/solutions-velos/" target="_blank"><div class="lnk-name">2R Aventure</div><div class="lnk-desc">Vélos de service · Conversion salaire · Programme Marguerite</div></a>
+    </div>
+  </div>
+
+</div>
+
+<!-- ===== PME 50-249 ===== -->
+<div id="p-pme250" class="panel">
+
+  <div class="section">
+    <div class="sec-head"><div class="sec-dot"></div><div class="sec-title">Structurer la dynamique et communiquer à tous les niveaux</div></div>
+    <a class="actu-badge" href="https://tousabiclou.fr" target="_blank">Tous à Biclou — Rejoindre le collectif de dirigeants MEL</a>
+    <div class="hl">
+      <p><strong>À cette taille, un référent mobilité identifié fait toute la différence.</strong> Quand la direction arrive à vélo et en parle, les collaborateurs comprennent que c'est possible — et osent se lancer. Pour amplifier l'effet, il faut une communication structurée : onboarding pro-vélo, plan d'animation annuel (défis, temps conviviaux), et une visibilité externe cohérente auprès des candidats, prestataires et pouvoirs publics.</p>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-n">1</div>
+        <div>
+          <div class="step-title">Local vélo sécurisé et équipé</div>
+          <div class="step-text">Local fermé, éclairé, avec bornes de recharge pour les vélos à assistance électrique, kit de réparation et rangement accessoires. Privilégiez les prestataires référencés dans le catalogue du label Employeur Pro Vélo ou <a href="https://www.urbaneo.eu" target="_blank">Urbaneo</a>, spécialiste basé sur la métropole lilloise.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">2</div>
+        <div>
+          <div class="step-title">Nommer un référent mobilité et lancer le diagnostic</div>
+          <div class="step-text">Une personne identifiée porte la démarche en interne. <a href="https://www.declic-mobilites.org/declic-mobilites/formation-management-mobilite" target="_blank">Déclic Mobilités propose une formation spécifique</a> pour les référents. Le diagnostic (enquête salariés, analyse des trajets) est la base du plan d'action. <a href="https://2raventure.com/plan-de-mobilite/" target="_blank">2R Aventure propose des outils pour démarrer en autonomie.</a></div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">3</div>
+        <div>
+          <div class="step-title">Communiquer auprès de toutes les parties prenantes</div>
+          <div class="step-text">
+            <p><span class="step-label">Candidats :</span> expliquer comment venir à vélo dès l'invitation à l'entretien, et partager l'engagement de la structure en faveur de la mobilité douce.</p>
+            <p><span class="step-label">Prestataires :</span> politique d'achat responsable en intégrant dans les critères les entreprises labellisées Employeur Pro Vélo, les artisans référencés auprès des <a href="https://lesboitesavelo.org/annuaire/" target="_blank">Boîtes à Vélo</a> ou dans l'annuaire du <a href="https://airtable.com/appoCpH7xdNhiHUsg/shr6oTGXWHu8SJNSM/tblI6t1looiZ7MBSn" target="_blank">Cercle Vélo MEL</a>.</p>
+            <p><span class="step-label">En externe :</span> mention sur le site web avec un calculateur d'itinéraire vélo (ex. <a href="https://geovelo.fr" target="_blank">Geovelo</a>), stationnement visible, engagement de l'entreprise sur ses accompagnements mobilité.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="sec-head"><div class="sec-dot"></div><div class="sec-title">Obligations réglementaires — seuil 50 salariés</div></div>
+    <div class="law-box">
+      <div class="law-title">⚖ Négociation annuelle obligatoire sur la mobilité (loi LOM 2019)</div>
+      <div class="law-text">Dès 50 salariés sur un même site avec délégué syndical, la mobilité domicile-travail est un thème obligatoire des négociations annuelles. À l'ordre du jour : montant et modalités du <strong>forfait mobilité durable</strong>, actions en faveur des modes durables. En l'absence d'accord, un <strong>plan de mobilité employeur</strong> — diagnostic et plan d'actions en faveur d'une mobilité durable — doit être formalisé.</div>
+    </div>
+    <div class="hl dark">
+      <p>Le plan de mobilité employeur n'ouvre pas de financement direct, mais permet d'amorcer un dialogue avec la MEL et Ilévia pour valoriser vos actions et solliciter des aménagements. <strong>Le Booster Rev3 finance 50 % de la prestation d'élaboration du plan pour les structures jusqu'à 250 salariés.</strong> <a href="https://www.ilevia.fr/cms/institutionnel/plan-de-mobilite-employeur" target="_blank">→ Ilévia accompagne gratuitement avec un plan d'accessibilité.</a></p>
+    </div>
+    <div class="tag-row">
+      <span class="tag tag-red">Négociation annuelle obligatoire (50+ salariés)</span>
+      <span class="tag tag-amber">Plan de mobilité en l'absence d'accord</span>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="sec-head"><div class="sec-dot"></div><div class="sec-title">Incitatifs financiers</div></div>
+    <div class="fin-cards">
+      <div class="fin-card">
+        <div class="fin-tag">Prime employeur</div>
+        <div class="fin-card-title">Forfait mobilité durable</div>
+        <div class="fin-card-text">Prime versée sur la base du volontariat de l'employeur, non soumise à cotisations sociales, jusqu'à <strong>600 €/an par salarié</strong>. Objectif : positionner les cyclistes au même niveau que les automobilistes bénéficiant d'un parking gratuit. <a href="https://entreprendre.service-public.gouv.fr/vosdroits/F33808" target="_blank">→ service-public.fr</a></div>
+      </div>
+      <div class="fin-card">
+        <div class="fin-tag">Avantage salarié</div>
+        <div class="fin-card-title">Conversion de salaire</div>
+        <div class="fin-card-text">Le salarié réduit son salaire brut pour financer son vélo via l'employeur. Coût nul pour l'employeur — économie de 40 à 50 % pour le salarié (avantage en nature = 0 €, récupération des charges sociales, de la TVA, crédit d'impôt sur les sociétés). Encore plus avantageux en achat groupé. → <a href="https://2raventure.com/solutions-velos/" target="_blank">2R Aventure</a> et <a href="https://azfalte.fr" target="_blank">Azfalte</a>.</div>
+      </div>
+      <div class="fin-card">
+        <div class="fin-tag">Flotte partagée</div>
+        <div class="fin-card-title">Vélo de service</div>
+        <div class="fin-card-text">Flotte de vélos disponibles pour les déplacements professionnels et le test par les salariés. Tester, c'est souvent adopter. → <a href="https://2raventure.com/solutions-velos/" target="_blank">2R Aventure</a>.</div>
+      </div>
+      <div class="fin-card">
+        <div class="fin-tag">Véhicule personnalisé</div>
+        <div class="fin-card-title">Vélo de fonction</div>
+        <div class="fin-card-text">Vélo mis à disposition personnellement du salarié, avantage en nature nul, récupération de la TVA, crédit d'impôt sur les sociétés de 25 %. Pour le salarié, une économie pouvant atteindre 500 €/mois sur ses coûts de mobilité. → <a href="https://2raventure.com/solutions-velos/" target="_blank">2R Aventure</a> et <a href="https://azfalte.fr" target="_blank">Azfalte</a>.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="sec-head"><div class="sec-dot"></div><div class="sec-title">Le label Employeur Pro Vélo</div></div>
+    <div class="label-box">
+      <div class="label-intro">Le label n'est pas seulement la récompense d'un engagement accompli. C'est <strong>un cadre pour structurer la démarche pro-vélo</strong> — utile aussi bien pour préparer la négociation annuelle que le plan de mobilité employeur. Il donne accès à <strong>une communauté d'employeurs engagés et à des ressources pratiques</strong>.</div>
+      <div class="label-reqs">
+        <div class="req"><div class="req-dot"></div>Nomination d'un référent vélo</div>
+        <div class="req"><div class="req-dot"></div>Diagnostic de la mobilité vélo</div>
+        <div class="req"><div class="req-dot"></div>Plan d'action mobilité vélo</div>
+        <div class="req"><div class="req-dot"></div>Communication auprès du personnel</div>
+        <div class="req"><div class="req-dot"></div>Entretien et réparation des vélos</div>
+        <div class="req"><div class="req-dot"></div>Formation à la conduite sécurisée</div>
+        <div class="req"><div class="req-dot"></div>Analyse des risques et accidents</div>
+        <div class="req"><div class="req-dot"></div>Espace de stationnement vélo</div>
+      </div>
+      <div class="label-links">
+        <a href="https://employeurprovelo.fr/" target="_blank">Site officiel du label</a>
+        <a href="https://employeurprovelo.fr/" target="_blank">Communauté &amp; ressources</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="sec-head"><div class="sec-dot"></div><div class="sec-title">Ressources</div></div>
+    <div class="links-grid">
+      <a class="lnk" href="https://tousabiclou.fr" target="_blank"><div class="lnk-name">Tous à Biclou</div><div class="lnk-desc">Collectif dirigeants MEL · Événements B2B · 21 mai grand public</div></a>
+      <a class="lnk" href="https://www.declic-mobilites.org/rdv-mobilite" target="_blank"><div class="lnk-name">Déclic Mobilités</div><div class="lnk-desc">Rendez-vous entre pairs · <a href="https://www.declic-mobilites.org/declic-mobilites/formation-management-mobilite" target="_blank">Formation référent mobilité</a></div></a>
+      <a class="lnk" href="https://www.ilevia.fr/cms/institutionnel/plan-de-mobilite-employeur" target="_blank"><div class="lnk-name">Ilévia</div><div class="lnk-desc">Plan d'accessibilité gratuit · Accompagnement plan de mobilité</div></a>
+      <a class="lnk" href="https://www.urbaneo.eu" target="_blank"><div class="lnk-name">Urbaneo</div><div class="lnk-desc">Équipements stationnement vélo · Basé MEL</div></a>
+      <a class="lnk" href="https://employeursprocovoiturage.ademe.fr/centre-de-ressources-mobilite-durable-employeur/mettre-en-place-un-plan-de-mobilite-employeur/" target="_blank"><div class="lnk-name">ADEME</div><div class="lnk-desc">Centre de ressources plan de mobilité employeur</div></a>
+      <a class="lnk" href="https://2raventure.com/plan-de-mobilite/" target="_blank"><div class="lnk-name">2R Aventure</div><div class="lnk-desc">Plan mobilité · Label · Vélos de service et de fonction</div></a>
+    </div>
+  </div>
+
+</div>
+
+<!-- ===== ETI ===== -->
+<div id="p-eti" class="panel">
+
+  <div class="section">
+    <div class="sec-head"><div class="sec-dot"></div><div class="sec-title">Structurer la dynamique à l'échelle de l'organisation</div></div>
+    <a class="actu-badge" href="https://tousabiclou.fr" target="_blank">Tous à Biclou — Devenir entreprise signataire</a>
+    <div class="hl">
+      <p><strong>À cette taille, la visibilité se construit par la masse critique.</strong> Un parking vélo bien rempli vaut 30 % du travail de communication. Quand la direction arrive à vélo, les équipes comprennent que c'est possible — et que c'est dans les valeurs de la structure. Afficher les chiffres (nombre de cyclistes, kilomètres parcourus, émissions évitées) dans les espaces communs transforme l'usage en culture.</p>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-n">1</div>
+        <div>
+          <div class="step-title">Local vélo structurant, signalé et équipé</div>
+          <div class="step-text">Accès sécurisé, bornes de recharge, vestiaires, kit entretien, places pour les vélos cargo. Signalétique depuis le parking voiture. Privilégiez les prestataires du catalogue du label Employeur Pro Vélo ou <a href="https://www.urbaneo.eu" target="_blank">Urbaneo</a>, spécialiste basé sur la métropole lilloise.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">2</div>
+        <div>
+          <div class="step-title">Communiquer sur tous les fronts</div>
+          <div class="step-text">
+            <p><span class="step-label">Candidats :</span> expliquer comment venir à vélo dès l'invitation à l'entretien, et partager l'engagement de la structure en faveur de la mobilité douce.</p>
+            <p><span class="step-label">Prestataires :</span> politique d'achat responsable en intégrant dans les critères les entreprises labellisées Employeur Pro Vélo, les artisans référencés auprès des <a href="https://lesboitesavelo.org/annuaire/" target="_blank">Boîtes à Vélo</a> ou dans l'annuaire du <a href="https://airtable.com/appoCpH7xdNhiHUsg/shr6oTGXWHu8SJNSM/tblI6t1looiZ7MBSn" target="_blank">Cercle Vélo MEL</a>.</p>
+            <p><span class="step-label">En externe :</span> mention sur le site web avec un calculateur d'itinéraire vélo (ex. <a href="https://geovelo.fr" target="_blank">Geovelo</a>), stationnement visible, engagement de l'entreprise sur ses accompagnements mobilité.</p>
+          </div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">3</div>
+        <div>
+          <div class="step-title">Mesurer et valoriser les résultats</div>
+          <div class="step-text">Comptage des cyclistes (Telraam ou compteurs d'entrée), suivi du forfait mobilité durable, reporting RSE. Les données rendent la démarche tangible pour la direction, crédible pour les salariés, et utile dans le dialogue avec les pouvoirs publics et les clients. Défis collectifs : <a href="https://challenge-mobilite-hdf.fr" target="_blank">Challenge HDF Mobilité</a>, <a href="https://challenge-maiavelo.geovelo.fr" target="_blank">Mai à Vélo</a>.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="sec-head"><div class="sec-dot"></div><div class="sec-title">Obligations réglementaires</div></div>
+    <div class="law-box">
+      <div class="law-title">⚖ Négociation annuelle + plan de mobilité obligatoire (250+ salariés, MEL)</div>
+      <div class="law-text"><strong>Négociation annuelle obligatoire sur la mobilité</strong> : obligatoire avec délégué syndical dès 50 salariés sur un même site. <strong>Plan de mobilité employeur</strong> (diagnostic et plan d'actions en faveur d'une mobilité durable) : obligatoire pour les établissements de 250+ salariés sur la MEL, à actualiser tous les 3 ans. Ce plan permet d'amorcer un dialogue avec la MEL et Ilévia pour valoriser vos actions et solliciter des aménagements. <a href="https://www.ilevia.fr/cms/institutionnel/plan-de-mobilite-employeur" target="_blank" style="color:var(--c1)">→ Ilévia accompagne gratuitement.</a></div>
+    </div>
+    <div class="tag-row">
+      <span class="tag tag-red">Plan de mobilité obligatoire (MEL, 250+)</span>
+      <span class="tag tag-red">Négociation annuelle obligatoire (50+)</span>
+      <span class="tag tag-amber">Forfait mobilité durable à négocier</span>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="sec-head"><div class="sec-dot"></div><div class="sec-title">Incitatifs financiers</div></div>
+    <div class="fin-cards">
+      <div class="fin-card">
+        <div class="fin-tag">Prime employeur</div>
+        <div class="fin-card-title">Forfait mobilité durable</div>
+        <div class="fin-card-text">Prime versée sur la base du volontariat de l'employeur, non soumise à cotisations sociales, jusqu'à <strong>600 €/an par salarié</strong>. À négocier lors de la réunion annuelle obligatoire, pour l'équité entre cyclistes et automobilistes bénéficiant d'un parking gratuit. <a href="https://entreprendre.service-public.gouv.fr/vosdroits/F33808" target="_blank">→ service-public.fr</a></div>
+      </div>
+      <div class="fin-card">
+        <div class="fin-tag">Avantage salarié</div>
+        <div class="fin-card-title">Conversion de salaire</div>
+        <div class="fin-card-text">Le salarié réduit son salaire brut pour financer son vélo via l'employeur. Coût nul pour l'employeur — économie de 40 à 50 % pour le salarié (avantage en nature = 0 €, récupération des charges sociales, de la TVA, crédit d'impôt sur les sociétés). Particulièrement pertinent en achat groupé. → <a href="https://2raventure.com/solutions-velos/" target="_blank">2R Aventure</a> et <a href="https://azfalte.fr" target="_blank">Azfalte</a>.</div>
+      </div>
+      <div class="fin-card">
+        <div class="fin-tag">Flotte partagée</div>
+        <div class="fin-card-title">Vélo de service</div>
+        <div class="fin-card-text">Flotte de vélos disponibles pour les déplacements professionnels et le test par les salariés. Tester, c'est souvent adopter — le vélo de service est le meilleur outil de sensibilisation à grande échelle. → <a href="https://2raventure.com/solutions-velos/" target="_blank">2R Aventure</a>.</div>
+      </div>
+      <div class="fin-card">
+        <div class="fin-tag">Véhicule personnalisé</div>
+        <div class="fin-card-title">Vélo de fonction</div>
+        <div class="fin-card-text">Vélo mis à disposition personnellement du salarié, avantage en nature nul, récupération de la TVA, crédit d'impôt sur les sociétés de 25 %. Pour le salarié, une économie pouvant atteindre 500 €/mois sur ses coûts de mobilité. → <a href="https://2raventure.com/solutions-velos/" target="_blank">2R Aventure</a> et <a href="https://azfalte.fr" target="_blank">Azfalte</a>.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="sec-head"><div class="sec-dot"></div><div class="sec-title">Le label Employeur Pro Vélo — cadre et ambition</div></div>
+    <div class="label-box">
+      <div class="label-intro">Le label n'est pas seulement la récompense d'un engagement accompli. C'est <strong>un cadre pour structurer la démarche</strong>, l'inscrire dans le plan de mobilité, la valoriser en recrutement et en RSE. Il donne accès à <strong>une communauté d'employeurs engagés et à des ressources pratiques</strong> pour avancer concrètement et dans la durée.</div>
+      <div class="label-reqs">
+        <div class="req"><div class="req-dot"></div>Nomination d'un référent vélo</div>
+        <div class="req"><div class="req-dot"></div>Diagnostic de la mobilité vélo</div>
+        <div class="req"><div class="req-dot"></div>Plan d'action mobilité vélo</div>
+        <div class="req"><div class="req-dot"></div>Communication auprès du personnel</div>
+        <div class="req"><div class="req-dot"></div>Entretien et réparation des vélos</div>
+        <div class="req"><div class="req-dot"></div>Formation à la conduite sécurisée</div>
+        <div class="req"><div class="req-dot"></div>Analyse des risques et accidents</div>
+        <div class="req"><div class="req-dot"></div>Espace de stationnement vélo</div>
+      </div>
+      <div class="label-links">
+        <a href="https://employeurprovelo.fr/" target="_blank">Site officiel du label</a>
+        <a href="https://employeurprovelo.fr/" target="_blank">Communauté &amp; ressources</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="sec-head"><div class="sec-dot"></div><div class="sec-title">Ressources</div></div>
+    <div class="links-grid">
+      <a class="lnk" href="https://tousabiclou.fr" target="_blank"><div class="lnk-name">Tous à Biclou</div><div class="lnk-desc">Signataire · Événements B2B dirigeants · 21 mai grand public</div></a>
+      <a class="lnk" href="https://www.declic-mobilites.org/rdv-mobilite" target="_blank"><div class="lnk-name">Déclic Mobilités</div><div class="lnk-desc">Échanges entre pairs · <a href="https://www.declic-mobilites.org/declic-mobilites/formation-management-mobilite" target="_blank">Formation référent mobilité</a></div></a>
+      <a class="lnk" href="https://www.ilevia.fr/cms/institutionnel/plan-de-mobilite-employeur" target="_blank"><div class="lnk-name">Ilévia</div><div class="lnk-desc">Accompagnement plan de mobilité gratuit</div></a>
+      <a class="lnk" href="https://www.urbaneo.eu" target="_blank"><div class="lnk-name">Urbaneo</div><div class="lnk-desc">Équipements stationnement vélo professionnel · MEL</div></a>
+      <a class="lnk" href="https://employeursprocovoiturage.ademe.fr/centre-de-ressources-mobilite-durable-employeur/mettre-en-place-un-plan-de-mobilite-employeur/" target="_blank"><div class="lnk-name">ADEME</div><div class="lnk-desc">Centre de ressources plan de mobilité employeur</div></a>
+      <a class="lnk" href="https://2raventure.com/plan-de-mobilite/" target="_blank"><div class="lnk-name">2R Aventure</div><div class="lnk-desc">Plan mobilité · Label · Vélos de service et de fonction</div></a>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<div class="footer">
+  <div class="footer-text">
+    Outil conçu par <a href="https://2raventure.com" target="_blank">2R Aventure</a> · Roubaix, Hauts-de-France · Sources : FUB, MEL, Ilévia, Rev3, ADEME, service-public.fr
+  </div>
+</div>
+
+<script>
+function show(id,btn){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('p-'+id).classList.add('active');
+  btn.classList.add('active');
+}
+</script>
+</body>
+</html>
